@@ -27,17 +27,21 @@ class DbHelper {
         fun executeQueryBlocking(action: Consumer<Map<String, List<Any>>>,
                                  sql: String,
                                  vararg args: Any) {
+            var done = false
             val lock = Object()
             var output: Map<String, List<Any>>? = null
             pending.add(Triple(sql, args, Consumer {
                 output = it
                 synchronized(lock) {
+                    done = true
                     lock.notify()
                 }
             }))
             LogHelper.debug("Scheduled database query: $sql, args: ${args.joinToString()}}")
             synchronized(lock) {
-                lock.wait()
+                while (!done) {
+                    lock.wait()
+                }
             }
             action.accept(output!!)
         }
