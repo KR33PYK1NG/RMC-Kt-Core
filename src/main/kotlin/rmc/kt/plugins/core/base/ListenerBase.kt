@@ -20,6 +20,13 @@ abstract class ListenerBase<E: Event>: Listener {
 
         private val instances = mutableMapOf<Class<out ListenerBase<out Event>>, ListenerBase<out Event>>()
 
+        /**
+         * Регистрирует новый слушатель события.
+         *
+         * @param clazz Класс слушателя
+         * @param priority Целевой приоритет
+         * @param ignoreCancelled Игнорировать ли отмененное событие
+         */
         @JvmStatic
         fun register(clazz: Class<out ListenerBase<out Event>>,
                      priority: EventPriority = EventPriority.NORMAL,
@@ -39,6 +46,11 @@ abstract class ListenerBase<E: Event>: Listener {
             } else LogHelper.debug("Tried to register already existing RMC listener: ${clazz.name}")
         }
 
+        /**
+         * Удаляет регистрацию слушателя события.
+         *
+         * @param clazz Класс слушателя
+         */
         @JvmStatic
         fun unregister(clazz: Class<out ListenerBase<out Event>>) {
             val instance = instances.get(clazz)

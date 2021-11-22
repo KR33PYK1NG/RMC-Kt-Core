@@ -21,6 +21,13 @@ abstract class CommandBase: Command("") {
 
         private val instances = mutableMapOf<Class<out CommandBase>, CommandBase>()
 
+        /**
+         * Регистрирует новую команду чата.
+         *
+         * @param clazz Класс команды
+         * @param label Целевой ярлык
+         * @param aliases Альтернативные ярлыки
+         */
         @JvmStatic
         fun register(clazz: Class<out CommandBase>,
                      label: String,
@@ -41,6 +48,11 @@ abstract class CommandBase: Command("") {
             } else LogHelper.debug("Tried to register already existing RMC command: ${clazz.name}")
         }
 
+        /**
+         * Удаляет регистрацию команды чата.
+         *
+         * @param clazz Класс команды
+         */
         @JvmStatic
         fun unregister(clazz: Class<out CommandBase>) {
             val instance = instances.get(clazz)

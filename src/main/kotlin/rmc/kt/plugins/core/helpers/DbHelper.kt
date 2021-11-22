@@ -16,6 +16,12 @@ class DbHelper {
 
         private val pending = ConcurrentLinkedQueue<Triple<String, Array<out Any>, Consumer<List<Map<String, Any>>>?>>()
 
+        /**
+         * Выполняет запрос к базе данных.
+         *
+         * @param sql Запрос на SQL
+         * @param args Аргументы вместо ?
+         */
         @JvmStatic
         fun executeUpdate(sql: String,
                           vararg args: Any) {
@@ -23,6 +29,15 @@ class DbHelper {
             LogHelper.debug("Scheduled database request: $sql, args: ${args.joinToString()}")
         }
 
+        /**
+         * Выполняет запрос к базе данных с ответом.
+         *
+         * Блокирует текущий поток до завершения.
+         *
+         * @param action Действие над ответом
+         * @param sql Запрос на SQL
+         * @param args Аргументы вместо ?
+         */
         @JvmStatic
         fun executeQueryBlocking(action: Consumer<List<Map<String, Any>>>,
                                  sql: String,

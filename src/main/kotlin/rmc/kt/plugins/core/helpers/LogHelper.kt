@@ -19,11 +19,23 @@ class LogHelper {
         @JvmStatic
         var showTrace = true
 
+        /**
+         * Отправляет информативный лог.
+         *
+         * @param msg Сообщение в лог
+         */
         @JvmStatic
         fun info(msg: String) {
             logger.info(msg)
         }
 
+        /**
+         * Отправляет дебаг-лог.
+         *
+         * Отображается в консоли, если showDebug = true.
+         *
+         * @param msg Сообщение в лог
+         */
         @JvmStatic
         fun debug(msg: String) {
             if (showDebug) {
@@ -33,6 +45,13 @@ class LogHelper {
             }
         }
 
+        /**
+         * Отправляет стак-трейс.
+         *
+         * Отображается в консоли, если showTrace = true.
+         *
+         * @param stack Ошибка в лог
+         */
         @JvmStatic
         fun trace(stack: Throwable) {
             val sw = StringWriter()

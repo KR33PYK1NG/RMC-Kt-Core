@@ -11,28 +11,57 @@ class TaskHelper {
 
     companion object {
 
+        /**
+         * Прямо сейчас выполняет действие в основном потоке.
+         *
+         * @param action Целевое действие
+         */
         @JvmStatic
         fun syncNow(action: Runnable): BukkitTask {
             return createTask(action).runTask(CorePlugin.instance)
         }
 
+        /**
+         * Прямо сейчас выполняет действие асинхронно к основному потоку.
+         *
+         * @param action Целевое действие
+         */
         @JvmStatic
         fun asyncNow(action: Runnable): BukkitTask {
             return createTask(action).runTaskAsynchronously(CorePlugin.instance)
         }
 
+        /**
+         * После задержки выполняет действие в основном потоке.
+         *
+         * @param action Целевое действие
+         * @param delay Задержка в тиках
+         */
         @JvmStatic
         fun syncLater(action: Runnable,
                       delay: Long): BukkitTask {
             return createTask(action).runTaskLater(CorePlugin.instance, delay)
         }
 
+        /**
+         * После задержки выполняет действие асинхронно к основному потоку.
+         *
+         * @param action Целевое действие
+         * @param delay Задержка в тиках
+         */
         @JvmStatic
         fun asyncLater(action: Runnable,
                        delay: Long): BukkitTask {
             return createTask(action).runTaskLaterAsynchronously(CorePlugin.instance, delay)
         }
 
+        /**
+         * Через каждый промежуток выполняет действие в основном потоке.
+         *
+         * @param action Целевое действие
+         * @param delay Задержка в тиках
+         * @param period Промежуток в тиках
+         */
         @JvmStatic
         fun syncTimer(action: Runnable,
                       delay: Long,
@@ -40,6 +69,13 @@ class TaskHelper {
             return createTask(action).runTaskTimer(CorePlugin.instance, delay, period)
         }
 
+        /**
+         * Через каждый промежуток выполняет действие асинхронно к основному потоку.
+         *
+         * @param action Целевое действие
+         * @param delay Задержка в тиках
+         * @param period Промежуток в тиках
+         */
         @JvmStatic
         fun asyncTimer(action: Runnable,
                        delay: Long,
