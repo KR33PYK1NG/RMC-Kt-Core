@@ -61,28 +61,33 @@ class DbHelper {
                         continue
                     }
                     val req = pending.remove()
-                    hikari.connection.use {
-                        it.prepareStatement(req.first).use {
-                            var shift = 1
-                            for (arg in req.second) {
-                                it.setObject(shift++, arg)
-                            }
-                            if (req.third != null) {
-                                val output = mutableMapOf<String, MutableList<Any>>()
-                                val set = it.executeQuery()
-                                val meta = set.metaData
-                                while (set.next()) {
-                                    for (i in 1..meta.columnCount) {
-                                        val list = output.getOrPut(meta.getColumnName(i)) { mutableListOf() }
-                                        list.add(set.getObject(i))
-                                    }
+                    try {
+                        hikari.connection.use {
+                            it.prepareStatement(req.first).use {
+                                var shift = 1
+                                for (arg in req.second) {
+                                    it.setObject(shift++, arg)
                                 }
-                                req.third!!.accept(output)
-                            } else {
-                                it.executeUpdate()
+                                if (req.third != null) {
+                                    val output = mutableMapOf<String, MutableList<Any>>()
+                                    val set = it.executeQuery()
+                                    val meta = set.metaData
+                                    while (set.next()) {
+                                        for (i in 1..meta.columnCount) {
+                                            val list = output.getOrPut(meta.getColumnName(i)) { mutableListOf() }
+                                            list.add(set.getObject(i))
+                                        }
+                                    }
+                                    req.third!!.accept(output)
+                                } else {
+                                    it.executeUpdate()
+                                }
+                                LogHelper.debug("Processed database request: ${req.first}, args: ${req.second.joinToString()}")
                             }
-                            LogHelper.debug("Processed database request: ${req.first}, args: ${req.second.joinToString()}")
                         }
+                    } catch (stack: Throwable) {
+                        LogHelper.trace(stack)
+                        req.third?.accept(mapOf())
                     }
                 }
             }
