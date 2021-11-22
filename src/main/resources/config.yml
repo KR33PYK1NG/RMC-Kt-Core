@@ -1,0 +1,4 @@
+hikari:
+  jdbc_url: "EDIT_ME"
+  username: "EDIT_ME"
+  password: "EDIT_ME"

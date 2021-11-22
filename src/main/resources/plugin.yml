@@ -1,0 +1,4 @@
+name: "$rmcBaseName"
+version: "$rmcVersion"
+main: "rmc.kt.plugins.core.CorePlugin"
+api-version: "1.16"
