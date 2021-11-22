@@ -22,7 +22,8 @@ class CorePlugin: JavaPlugin() {
         val jdbcUrl = config.getString("hikari.jdbc_url")!!
         val username = config.getString("hikari.username")!!
         val password = config.getString("hikari.password")!!
-        DbHelper.startDbThread(jdbcUrl, username, password)
+        val connectionTimeout = config.getLong("hikari.connection_timeout")
+        DbHelper.startDbThread(jdbcUrl, username, password, connectionTimeout)
     }
 
     override fun onDisable() {

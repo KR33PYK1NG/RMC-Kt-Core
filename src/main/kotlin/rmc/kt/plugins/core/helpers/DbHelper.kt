@@ -48,12 +48,14 @@ class DbHelper {
 
         internal fun startDbThread(jdbcUrl: String,
                                    username: String,
-                                   password: String) {
+                                   password: String,
+                                   connectionTimeout: Long) {
             thread(name = "RMC Database Thread") {
                 val hikari = HikariDataSource(HikariConfig().apply {
                     this.jdbcUrl = jdbcUrl
                     this.username = username
                     this.password = password
+                    this.connectionTimeout = connectionTimeout
                 })
                 while (true) {
                     sleep(1)

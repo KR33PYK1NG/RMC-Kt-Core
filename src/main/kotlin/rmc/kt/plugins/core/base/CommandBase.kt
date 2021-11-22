@@ -10,9 +10,9 @@ import rmc.kt.plugins.core.helpers.LogHelper
  */
 abstract class CommandBase: Command("") {
 
-    abstract fun onCommand(sender: CommandSender, label: String, args: Array<out String>)
+    abstract fun onCommand(sender: CommandSender, label: String, args: Array<String>)
 
-    override fun execute(sender: CommandSender, commandLabel: String, args: Array<out String>): Boolean {
+    override fun execute(sender: CommandSender, commandLabel: String, args: Array<String>): Boolean {
         onCommand(sender, commandLabel, args)
         return true
     }
