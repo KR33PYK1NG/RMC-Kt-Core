@@ -14,11 +14,16 @@ class CorePlugin: JavaPlugin() {
         lateinit var instance: CorePlugin
             private set
 
+        @JvmStatic
+        lateinit var serverName: String
+            private set
+
     }
 
     override fun onEnable() {
         instance = this
         saveDefaultConfig()
+        serverName = config.getString("server_name")!!
         val jdbcUrl = config.getString("hikari.jdbc_url")!!
         val username = config.getString("hikari.username")!!
         val password = config.getString("hikari.password")!!

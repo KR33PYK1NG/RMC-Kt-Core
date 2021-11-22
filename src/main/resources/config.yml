@@ -1,3 +1,4 @@
+server_name: "EDIT_ME"
 hikari:
   jdbc_url: "EDIT_ME"
   username: "EDIT_ME"
