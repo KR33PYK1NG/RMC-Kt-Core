@@ -73,6 +73,7 @@ class DbHelper {
                                         list.add(set.getObject(i))
                                     }
                                 }
+                                req.third!!.accept(output)
                             } else {
                                 it.executeUpdate()
                             }
