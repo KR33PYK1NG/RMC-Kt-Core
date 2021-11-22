@@ -14,7 +14,7 @@ class DbHelper {
 
     companion object {
 
-        private val pending = ConcurrentLinkedQueue<Triple<String, Array<out Any>, Consumer<Map<String, List<Any>>>?>>()
+        private val pending = ConcurrentLinkedQueue<Triple<String, Array<out Any>, Consumer<List<Map<String, Any>>>?>>()
 
         @JvmStatic
         fun executeUpdate(sql: String,
@@ -24,12 +24,12 @@ class DbHelper {
         }
 
         @JvmStatic
-        fun executeQueryBlocking(action: Consumer<Map<String, List<Any>>>,
+        fun executeQueryBlocking(action: Consumer<List<Map<String, Any>>>,
                                  sql: String,
                                  vararg args: Any) {
             var done = false
             val lock = Object()
-            var output: Map<String, List<Any>>? = null
+            var output: List<Map<String, Any>>? = null
             pending.add(Triple(sql, args, Consumer {
                 output = it
                 synchronized(lock) {
@@ -71,14 +71,15 @@ class DbHelper {
                                     it.setObject(shift++, arg)
                                 }
                                 if (req.third != null) {
-                                    val output = mutableMapOf<String, MutableList<Any>>()
+                                    val output = mutableListOf<Map<String, Any>>()
                                     val set = it.executeQuery()
                                     val meta = set.metaData
                                     while (set.next()) {
+                                        val columns = mutableMapOf<String, Any>()
                                         for (i in 1..meta.columnCount) {
-                                            val list = output.getOrPut(meta.getColumnName(i)) { mutableListOf() }
-                                            list.add(set.getObject(i))
+                                            columns.put(meta.getColumnName(i), set.getObject(i))
                                         }
+                                        output.add(columns)
                                     }
                                     req.third!!.accept(output)
                                 } else {
@@ -89,7 +90,7 @@ class DbHelper {
                         }
                     } catch (stack: Throwable) {
                         LogHelper.trace(stack)
-                        req.third?.accept(mapOf())
+                        req.third?.accept(listOf())
                     }
                 }
             }
