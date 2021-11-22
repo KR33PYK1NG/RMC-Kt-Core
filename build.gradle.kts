@@ -3,7 +3,7 @@ val rmcRepoPass: String by project
 
 val rmcGroup = "rmc.kt.plugins"
 val rmcArtifact = "core"
-val rmcVersion = "1.1.0"
+val rmcVersion = "1.1.1"
 val rmcBaseName = "RMC-Kt-Core"
 
 group = rmcGroup
@@ -18,6 +18,8 @@ plugins {
 }
 
 java {
+    withSourcesJar()
+    withJavadocJar()
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(11))
     }
