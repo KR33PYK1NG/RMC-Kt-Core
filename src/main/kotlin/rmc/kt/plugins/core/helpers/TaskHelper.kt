@@ -34,52 +34,52 @@ class TaskHelper {
         /**
          * После задержки выполняет действие в основном потоке.
          *
-         * @param action Целевое действие
          * @param delay Задержка в тиках
+         * @param action Целевое действие
          */
         @JvmStatic
-        fun syncLater(action: Runnable,
-                      delay: Long): BukkitTask {
+        fun syncLater(delay: Long,
+                      action: Runnable): BukkitTask {
             return createTask(action).runTaskLater(CorePlugin.instance, delay)
         }
 
         /**
          * После задержки выполняет действие асинхронно к основному потоку.
          *
-         * @param action Целевое действие
          * @param delay Задержка в тиках
+         * @param action Целевое действие
          */
         @JvmStatic
-        fun asyncLater(action: Runnable,
-                       delay: Long): BukkitTask {
+        fun asyncLater(delay: Long,
+                       action: Runnable): BukkitTask {
             return createTask(action).runTaskLaterAsynchronously(CorePlugin.instance, delay)
         }
 
         /**
          * Через каждый промежуток выполняет действие в основном потоке.
          *
-         * @param action Целевое действие
          * @param delay Задержка в тиках
          * @param period Промежуток в тиках
+         * @param action Целевое действие
          */
         @JvmStatic
-        fun syncTimer(action: Runnable,
-                      delay: Long,
-                      period: Long = delay): BukkitTask {
+        fun syncTimer(delay: Long,
+                      period: Long = delay,
+                      action: Runnable): BukkitTask {
             return createTask(action).runTaskTimer(CorePlugin.instance, delay, period)
         }
 
         /**
          * Через каждый промежуток выполняет действие асинхронно к основному потоку.
          *
-         * @param action Целевое действие
          * @param delay Задержка в тиках
          * @param period Промежуток в тиках
+         * @param action Целевое действие
          */
         @JvmStatic
-        fun asyncTimer(action: Runnable,
-                       delay: Long,
-                       period: Long = delay): BukkitTask {
+        fun asyncTimer(delay: Long,
+                       period: Long = delay,
+                       action: Runnable): BukkitTask {
             return createTask(action).runTaskTimerAsynchronously(CorePlugin.instance, delay, period)
         }
 
