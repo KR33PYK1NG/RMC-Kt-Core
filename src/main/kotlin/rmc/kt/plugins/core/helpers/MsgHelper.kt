@@ -11,6 +11,18 @@ class MsgHelper {
     companion object {
 
         /**
+         * Возвращает форматированную строку.
+         *
+         * Переводит & в цветовые коды.
+         *
+         * @param str Строка с & символами
+         */
+        @JvmStatic
+        fun format(str: String): String {
+            return ChatColor.translateAlternateColorCodes('&', str)
+        }
+
+        /**
          * Отправляет игроку сообщение.
          *
          * @param receiver Получатель
