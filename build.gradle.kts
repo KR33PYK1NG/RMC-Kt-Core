@@ -3,7 +3,7 @@ val rmcRepoPass: String by project
 
 val rmcGroup = "rmc.kt.plugins"
 val rmcArtifact = "core"
-val rmcVersion = "1.1.2"
+val rmcVersion = "1.1.3"
 val rmcBaseName = "RMC-Kt-Core"
 
 group = rmcGroup
