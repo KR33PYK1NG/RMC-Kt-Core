@@ -3,7 +3,7 @@ val rmcRepoPass: String by project
 
 val rmcGroup = "rmc.kt.plugins"
 val rmcArtifact = "core"
-val rmcVersion = "1.1.5"
+val rmcVersion = "1.2.0"
 val rmcBaseName = "RMC-Kt-Core"
 
 group = rmcGroup
@@ -20,7 +20,7 @@ plugins {
 java {
     withJavadocJar()
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
@@ -55,7 +55,7 @@ repositories {
 }
 
 dependencies {
-    add("implementation", "org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
+    add("implementation", "org.spigotmc:spigot-api:1.18-rc3-R0.1-SNAPSHOT")
     add("implementation", "com.zaxxer:HikariCP:5.0.0")
     add("implementation", "org.apache.logging.log4j:log4j-api:2.14.1")
 }
