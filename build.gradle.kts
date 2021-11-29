@@ -29,6 +29,11 @@ tasks.withType<ProcessResources> {
            "rmcVersion" to rmcVersion)
 }
 
+tasks.create<Copy>("dumpDeps") {
+    from(configurations.runtimeClasspath)
+    into("build/deps/")
+}
+
 configure<PublishingExtension> {
     repositories {
         maven {
@@ -50,12 +55,12 @@ configure<PublishingExtension> {
 repositories {
     mavenCentral()
     maven {
-        setUrl("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+        setUrl("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
     }
 }
 
 dependencies {
-    add("implementation", "org.spigotmc:spigot-api:1.18-rc3-R0.1-SNAPSHOT")
     add("implementation", "com.zaxxer:HikariCP:5.0.0")
-    add("implementation", "org.apache.logging.log4j:log4j-api:2.14.1")
+    add("compileOnly", "org.apache.logging.log4j:log4j-api:2.14.1")
+    add("compileOnly", "org.spigotmc:spigot-api:1.18-rc3-R0.1-SNAPSHOT")
 }
